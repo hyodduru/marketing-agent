@@ -15,6 +15,15 @@ export interface AppConfig {
     exclude_channels?: string[];
     exclude_title_words?: string[];
   };
+  rising?: {
+    query?: string;
+    within_hours?: number;
+    min_views?: number;
+    max_views?: number;
+    min_views_per_hour?: number;
+    max_pages?: number;
+    exclude_title_words?: string[];
+  };
   comment: { min_chars: number; max_chars: number; brand: string };
   limits: { daily_max_comments: number };
 }
