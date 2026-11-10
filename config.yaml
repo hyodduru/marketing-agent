@@ -28,3 +28,4 @@ comment:
 
 limits:
   daily_max_comments: 10
+  allow_shorts_post: false   # 쇼츠 게시 허용 여부 (기본: 초안까지만)

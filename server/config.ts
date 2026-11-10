@@ -25,7 +25,7 @@ export interface AppConfig {
     exclude_title_words?: string[];
   };
   comment: { min_chars: number; max_chars: number; brand: string };
-  limits: { daily_max_comments: number };
+  limits: { daily_max_comments: number; allow_shorts_post?: boolean };
 }
 
 export function loadConfig(): AppConfig {

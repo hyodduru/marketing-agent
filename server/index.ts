@@ -26,6 +26,7 @@ app.get('/api/status', (_req, res) => {
     profiles: cfg.profiles,
     comment: cfg.comment,
     dailyMax: cfg.limits.daily_max_comments,
+    allowShortsPost: Boolean(cfg.limits.allow_shorts_post),
     todayCount: store.countToday(),
     youtubeReady: Boolean(env.youtubeApiKey),
     llmProvider: env.llmProvider,

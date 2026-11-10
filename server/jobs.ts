@@ -59,7 +59,7 @@ export function startPost(input: {
 
   // ── 운영 규칙: UI가 아니라 서버에서 막습니다 ──
   if (running) throw new Error('다른 댓글을 게시하는 중이에요. 끝난 뒤 다시 눌러주세요.');
-  if (input.durationSec !== undefined && input.durationSec <= SHORTS_MAX_SEC)
+  if (!cfg.limits.allow_shorts_post && input.durationSec !== undefined && input.durationSec <= SHORTS_MAX_SEC)
     throw new Error('쇼츠는 초안까지만 지원해요 (댓글 창 구조가 달라 게시는 막아 두었어요).');
   const failed = validate(text, '', input.videoId).filter((c) => !c.ok && c.label !== '다른 댓글과 다름');
   if (failed.length) throw new Error(`댓글 규칙 위반: ${failed.map((c) => c.label).join(', ')}`);

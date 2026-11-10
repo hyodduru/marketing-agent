@@ -106,7 +106,7 @@ export function PostPanel({
   const inProgress = Boolean(run && !run.result);
   const limitReached = status ? status.todayCount >= status.dailyMax : false;
   const already = Boolean(video?.alreadyCommented) || Boolean(run?.result?.ok);
-  const isShorts = Boolean(video && video.durationSec <= 180);
+  const isShorts = Boolean(video && video.durationSec <= 180 && !status?.allowShortsPost);
   const canPost = Boolean(video && draft.trim() && draftOk && loggedIn.length && !inProgress && !limitReached && !already && !isShorts);
 
   const reason = !video

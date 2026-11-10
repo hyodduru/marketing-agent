@@ -17,6 +17,7 @@ export interface Status {
   profiles: string[];
   comment: { min_chars: number; max_chars: number; brand: string };
   dailyMax: number;
+  allowShortsPost?: boolean;
   todayCount: number;
   youtubeReady: boolean;
   llmProvider: string;
