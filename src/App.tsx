@@ -37,7 +37,7 @@ export default function App() {
         <div className="brand">
           <span className="logo" aria-hidden="true">JG</span>
           <h1>JG Comment Agent</h1>
-          <span className="crumb">/ 연애 고민 영상 댓글</span>
+          <span className="crumb">연애 고민 영상 댓글</span>
         </div>
         {status && (
           <div className="meta-chips">
