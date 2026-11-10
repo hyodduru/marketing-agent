@@ -101,7 +101,6 @@ LLM은 지시를 가끔 어깁니다. 그래서 과제의 금지 사항은 프�
 
 지금은 댓글이 게시됐다는 것까지만 알 수 있습니다. 실제로 운영한다면 댓글의 좋아요와 답글, 운명원 유입을 추적해서 어떤 영상과 어떤 말투가 효과가 있는지 보고 싶습니다. 게시 후 로그인하지 않은 브라우저에서 댓글이 보이는지 확인하면 스팸 필터에 숨겨진 경우도 잡아낼 수 있을 것입니다. 그리고 실제 상업 운영이라면 표시광고법상 경제적 이해관계를 밝혀야 할 수도 있어서, 운영 전에 법무 검토가 필요하다고 봅니다.
 
-비용은 거의 들지 않습니다. 댓글 생성은 Claude Code(Pro 구독)로 돌려 추가 API 비용이 없습니다. Claude Code를 쓸 수 없는 환경을 위해 Gemini 무료 키로도 생성하는 경로를 만들어 두었지만, 이 경로는 직접 테스트하지는 못했습니다. YouTube Data API도 무료 할당량 안에서 씁니다.
 
 ## 사용한 오픈소스
 [Playwright](https://github.com/microsoft/playwright) · [React](https://github.com/facebook/react) · [Vite](https://github.com/vitejs/vite) · [Express](https://github.com/expressjs/express) · [yaml](https://github.com/eemeli/yaml) · [dotenv](https://github.com/motdotla/dotenv) · [tsx](https://github.com/privatenumber/tsx) · [concurrently](https://github.com/open-cli-tools/concurrently)
