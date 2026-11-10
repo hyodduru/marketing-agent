@@ -106,10 +106,13 @@ export function PostPanel({
   const inProgress = Boolean(run && !run.result);
   const limitReached = status ? status.todayCount >= status.dailyMax : false;
   const already = Boolean(video?.alreadyCommented) || Boolean(run?.result?.ok);
-  const canPost = Boolean(video && draft.trim() && draftOk && loggedIn.length && !inProgress && !limitReached && !already);
+  const isShorts = Boolean(video && video.durationSec <= 180);
+  const canPost = Boolean(video && draft.trim() && draftOk && loggedIn.length && !inProgress && !limitReached && !already && !isShorts);
 
   const reason = !video
     ? '영상을 먼저 골라주세요'
+    : isShorts
+      ? '쇼츠는 초안까지만 지원해요 (게시는 일반 영상만)'
     : !draft.trim()
       ? '댓글 초안을 기다리는 중이에요'
       : !draftOk

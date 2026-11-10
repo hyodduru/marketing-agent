@@ -24,6 +24,8 @@ interface Job {
   finished: boolean;
 }
 
+export const SHORTS_MAX_SEC = 180;
+
 const jobs = new Map<string, Job>();
 let running = false;
 
@@ -45,12 +47,20 @@ export function pickProfile(): string {
   return candidates[0].name;
 }
 
-export function startPost(input: { videoId: string; videoTitle: string; text: string; profile: string }) {
+export function startPost(input: {
+  videoId: string;
+  videoTitle: string;
+  text: string;
+  profile: string;
+  durationSec?: number;
+}) {
   const cfg = loadConfig();
   const text = input.text.trim();
 
   // ── 운영 규칙: UI가 아니라 서버에서 막습니다 ──
   if (running) throw new Error('다른 댓글을 게시하는 중이에요. 끝난 뒤 다시 눌러주세요.');
+  if (input.durationSec !== undefined && input.durationSec <= SHORTS_MAX_SEC)
+    throw new Error('쇼츠는 초안까지만 지원해요 (댓글 창 구조가 달라 게시는 막아 두었어요).');
   const failed = validate(text, '', input.videoId).filter((c) => !c.ok && c.label !== '다른 댓글과 다름');
   if (failed.length) throw new Error(`댓글 규칙 위반: ${failed.map((c) => c.label).join(', ')}`);
   if (store.findActiveForVideo(input.videoId)) throw new Error('이 영상에는 이미 댓글을 달았어요 (영상당 1개).');

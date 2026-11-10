@@ -107,7 +107,8 @@ app.post(
   '/api/post',
   wrap(async (req, res) => {
     const { videoId, videoTitle, text, profile = 'auto' } = req.body ?? {};
-    res.json(startPost({ videoId, videoTitle, text, profile }));
+    const video = await getVideo(String(videoId)); // 길이는 클라이언트 값이 아니라 YouTube에서 다시 확인
+    res.json(startPost({ videoId, videoTitle, text, profile, durationSec: video?.durationSec }));
   }),
 );
 
