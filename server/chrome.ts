@@ -40,7 +40,8 @@ export function chromePath(): string {
 }
 
 /**
- * Playwright는 기본으로 가짜 키체인(--use-mock-keychain)을 써서,
- * 일반 크롬에서 로그인하며 맥 키체인으로 암호화된 쿠키를 읽지 못합니다. 이 옵션을 끕니다.
+ * Playwright 기본 인자 중 맥에서 끄는 것들:
+ * - --use-mock-keychain, --password-store=basic: 가짜 키체인을 써서 일반 크롬에서 로그인한 쿠키(맥 키체인 암호화)를 못 읽음
+ * - --no-sandbox: 맥에선 불필요하고, 크롬 상단에 '지원되지 않는 명령줄 플래그' 경고줄이 뜸
  */
-export const KEEP_REAL_KEYCHAIN = ['--use-mock-keychain', '--password-store=basic'];
+export const KEEP_REAL_KEYCHAIN = ['--use-mock-keychain', '--password-store=basic', '--no-sandbox'];
