@@ -28,7 +28,7 @@
 ## 실행 방법 (macOS)
 
 필요한 것: **Node.js 20.11+**, **Google Chrome**, 아래 둘 중 하나의 AI
-- [Claude Code](https://docs.claude.com/en/docs/claude-code) 설치 후 `claude` 로 로그인 (Pro 구독이면 추가 비용 없음) — 기본값
+- [Claude Code](https://docs.claude.com/en/docs/claude-code) 설치 후 `claude` 로 로그인 (기본값, Pro 구독이면 추가 비용 없음)
 - 또는 [Google AI Studio](https://aistudio.google.com) 무료 Gemini API 키
 
 ```bash
