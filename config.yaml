@@ -6,7 +6,7 @@ search:
   query: "연애 고민|남자 심리|여자 심리|썸 신호|재회 방법|짝사랑|연애 상담|이별 후|헤어진 연인"
   published_within_days: 14    # 최근 N일 안에 올라온 영상만
   max_per_channel: 2           # 채널당 최대 영상 수
-  min_duration_sec: 181        # 쇼츠 제외 (쇼츠는 댓글 화면이 달라 자동 게시가 불안정)
+  min_duration_sec: 181        # 최근 영상 목록의 최소 길이 (초)
   # 방송사 예능 클립은 연애 '고민' 영상이 아니라서 제외합니다
   exclude_channels: [SBS, 스브스, MBC, KBS, JTBC, tvN, TV조선, MBN, 채널A, ENA, Mnet, TVING, 티빙, 쿠팡플레이, 웨이브, Wavve, Netflix, 넷플릭스, 디즈니, 엠뚜루마뚜루, 스브스예능]
   exclude_title_words: [선공개, 예고, 하이라이트, 풀버전, "EP.", 회차, 클립]
@@ -28,4 +28,4 @@ comment:
 
 limits:
   daily_max_comments: 10
-  allow_shorts_post: false   # 쇼츠 게시 허용 여부 (기본: 초안까지만)
+  allow_shorts_post: true    # 쇼츠에도 댓글 게시 허용
