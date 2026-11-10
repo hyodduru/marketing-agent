@@ -63,7 +63,7 @@ export function LoadPanel({
           disabled={loading}
           title="최근 48시간 · 조회수 1,000~5,000 · 시간당 150회 이상"
         >
-          {loading && mode === 'rising' ? '찾는 중…' : '🔥 뜨기 직전'}
+          {loading && mode === 'rising' ? '찾는 중…' : '뜨기 직전 영상'}
         </button>
       </div>
 

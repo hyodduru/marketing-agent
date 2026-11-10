@@ -128,7 +128,7 @@ export function SelectPanel({
                     {draft.source === 'transcript' ? '자막 기반' : '제목·설명 기반'}
                   </span>
                 </label>
-                <div className="concern">{draft.concern}</div>
+                <blockquote className="concern">{draft.concern}</blockquote>
               </div>
 
               <div className="field">
@@ -151,13 +151,13 @@ export function SelectPanel({
                 <ul className="checks">
                   {checks.map((c) => (
                     <li key={c.label} className={c.ok ? 'ok' : 'bad'} title={c.detail}>
-                      {c.ok ? '✓' : '✕'} {c.label}
+                      {c.label}
                       {c.detail && c.label.includes('자') ? ` (${c.detail})` : ''}
                     </li>
                   ))}
                 </ul>
                 <button className="btn ghost" onClick={() => generate(video.id, true)}>
-                  ↻ 다른 댓글로 다시 생성
+                  다른 댓글로 다시 쓰기
                 </button>
               </div>
             </>

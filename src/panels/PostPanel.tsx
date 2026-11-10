@@ -172,7 +172,7 @@ export function PostPanel({
           </ol>
           {run.result?.ok && (
             <a className="btn ghost wide" href={run.result.commentUrl} target="_blank" rel="noreferrer">
-              댓글 보기 ↗
+              게시된 댓글 보기
             </a>
           )}
           {run.result && !run.result.ok && (
