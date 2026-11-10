@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { api } from '../api';
 import type { Video } from '../types';
-import { compact, duration, timeAgo } from '../format';
+import { compact, duration, timeAgo, uploadDate } from '../format';
 
 /** ① 영상 불러오기 — 최근 연애 고민 영상 + 실시간 조회수 상승 영상을 한 목록으로 */
 export function LoadPanel({
@@ -110,7 +110,7 @@ export function LoadPanel({
               <strong className="title">{v.title}</strong>
               <span className="sub">{v.channelTitle}</span>
               <span className="sub">
-                {timeAgo(v.publishedAt)} · 조회수 {compact(v.viewCount)}
+                {uploadDate(v.publishedAt)} ({timeAgo(v.publishedAt)}) · 조회수 {compact(v.viewCount)}
               </span>
               <span className="tags">
                 {v.rising && <span className="pill orange small">조회수 상승 중 · 시간당 {compact(v.viewsPerHour)}회</span>}

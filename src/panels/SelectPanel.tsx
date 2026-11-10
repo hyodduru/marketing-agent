@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { api } from '../api';
 import type { Check, Draft, Video } from '../types';
-import { compact, timeAgo } from '../format';
+import { compact, timeAgo, uploadDate } from '../format';
 
 /** ② 영상 선택 — 고민 한 줄 + 댓글 초안 */
 export function SelectPanel({
@@ -98,7 +98,7 @@ export function SelectPanel({
             <div>
               <strong>{video.title}</strong>
               <span>
-                {video.channelTitle} · {timeAgo(video.publishedAt)} · 조회수{' '}
+                {video.channelTitle} · {uploadDate(video.publishedAt)} ({timeAgo(video.publishedAt)}) · 조회수{' '}
                 {compact(video.viewCount)}
               </span>
             </div>

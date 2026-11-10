@@ -27,3 +27,10 @@ export function dateTime(iso: string) {
     minute: '2-digit',
   });
 }
+
+/** 올린 날짜: "11월 10일" (올해가 아니면 연도 포함) */
+export function uploadDate(iso: string) {
+  const d = new Date(iso);
+  const sameYear = d.getFullYear() === new Date().getFullYear();
+  return d.toLocaleDateString('ko-KR', sameYear ? { month: 'long', day: 'numeric' } : { year: 'numeric', month: 'long', day: 'numeric' });
+}

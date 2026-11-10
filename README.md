@@ -44,7 +44,8 @@ bash start.command        # 패키지 설치 후 http://localhost:5173 자동 �
 ### 설정 (`config.yaml`)
 ```yaml
 profiles: [유튜브1, 유튜브2, 유튜브3]
-search:   { query: "연애 고민|남자 심리|…", published_within_days: 7, max_per_channel: 2 }
+search:   { query: "연애 고민|남자 심리|…", published_within_days: 14, max_per_channel: 2 }
+rising:   { query: 연애, min_views: 1000, max_views: 5000, min_views_per_hour: 150 }
 comment:  { min_chars: 40, max_chars: 120, brand: 운명원 }
 limits:   { daily_max_comments: 10 }
 ```
