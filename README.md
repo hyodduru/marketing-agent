@@ -118,14 +118,14 @@ LLM은 지시를 가끔 어깁니다. 그래서 과제의 금지 사항을 프�
 
 ## 6. 구조와 기술 스택
 
-React + Vite 대시보드, Node.js(Express) 서버, Playwright 브라우저 자동화, YouTube Data API v3, 댓글 생성은 Claude Code CLI(기본) 또는 Gemini API를 씁니다.
+React + Vite 대시보드, Node.js(Express) 서버, Playwright 브라우저 자동화, YouTube Data API v3, 댓글 생성은 Claude Code CLI를 씁니다.
 
 ```text
 server/
   youtube.ts            ① YouTube Data API 검색, 필터, 조회수 상승 영상 탐색
   transcript.ts         ② 자막 가져오기 (없으면 제목·설명으로 대체)
   transcript-reader.ts  ② 영상 페이지의 '스크립트 표시'를 열어 자막 읽기
-  llm.ts                ② Claude Code CLI, 실패 시 Gemini API
+  llm.ts                ② Claude Code CLI 호출
   comment.ts            ② 프롬프트, 규칙 검사, 최대 3회 재생성, 초안 저장
   chrome.ts             ③ 설치된 Chrome 찾기
   profiles.ts           ③ 전용 프로필 폴더, 로그인 확인
@@ -144,14 +144,12 @@ src/                    React 대시보드
 
 - Node.js 20.11 이상
 - Google Chrome
-- 댓글 생성 AI 중 하나
-  - [Claude Code](https://docs.claude.com/en/docs/claude-code) 설치 후 `claude`로 로그인 (기본값)
-  - 또는 [Google AI Studio](https://aistudio.google.com)에서 발급한 Gemini API 키
+- [Claude Code](https://docs.claude.com/en/docs/claude-code) 설치 후 `claude`로 로그인 (댓글 생성에 사용)
 
 ```bash
 git clone https://github.com/hyodduru/marketing-agent.git
 cd marketing-agent
-cp .env.example .env    # YOUTUBE_API_KEY(필수), GEMINI_API_KEY(선택) 입력
+cp .env.example .env    # YOUTUBE_API_KEY 입력
 bash start.command      # 패키지 설치 후 http://localhost:5173 이 열립니다
 ```
 
@@ -171,4 +169,4 @@ limits:   { daily_max_comments: 10, allow_shorts_post: true }
 
 [Playwright](https://github.com/microsoft/playwright), [React](https://github.com/facebook/react), [Vite](https://github.com/vitejs/vite), [Express](https://github.com/expressjs/express), [yaml](https://github.com/eemeli/yaml), [dotenv](https://github.com/motdotla/dotenv), [tsx](https://github.com/privatenumber/tsx), [concurrently](https://github.com/open-cli-tools/concurrently)
 
-외부 API와 도구: YouTube Data API v3, Claude Code CLI, Google Gemini API
+외부 API와 도구: YouTube Data API v3, Claude Code CLI
