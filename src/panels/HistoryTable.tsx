@@ -6,7 +6,7 @@ const LABEL = { running: '진행 중', success: '성공', failed: '실패' } as 
 export function HistoryTable({ records }: { records: CommentRecord[] }) {
   return (
     <section className="history">
-      <h2>게시 기록</h2>
+      <h2>게시 기록 <span className="count-muted">{records.length}</span></h2>
       {records.length === 0 ? (
         <p className="empty">아직 게시한 댓글이 없어요</p>
       ) : (
@@ -32,7 +32,7 @@ export function HistoryTable({ records }: { records: CommentRecord[] }) {
                 <td className="nowrap">{r.profile}</td>
                 <td className="text">{r.text}</td>
                 <td className="nowrap">
-                  <span className={`badge ${r.status}`}>{LABEL[r.status]}</span>
+                  <span className={`pill ${r.status === 'success' ? 'green' : r.status === 'failed' ? 'red' : 'yellow'}`}>{LABEL[r.status]}</span>
                   {r.commentUrl && (
                     <a href={r.commentUrl} target="_blank" rel="noreferrer"> 댓글 보기</a>
                   )}

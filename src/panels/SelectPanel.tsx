@@ -124,7 +124,7 @@ export function SelectPanel({
               <div className="field">
                 <label>
                   영상 속 고민 한 줄
-                  <span className="source">
+                  <span className={`pill small ${draft.source === 'transcript' ? 'blue' : 'gray'}`}>
                     {draft.source === 'transcript' ? '자막 기반' : '제목·설명 기반'}
                   </span>
                 </label>

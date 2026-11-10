@@ -108,7 +108,7 @@ export function LoadPanel({
                 {timeAgo(v.publishedAt)} · 조회수 {compact(v.viewCount)}
                 {mode === 'rising' && ` · 시간당 ${v.viewsPerHour}`}
               </span>
-              {v.alreadyCommented && <span className="tag">댓글 완료</span>}
+              {v.alreadyCommented && <span className="pill green small">댓글 완료</span>}
             </div>
           </button>
         ))}

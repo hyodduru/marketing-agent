@@ -33,34 +33,46 @@ export default function App() {
 
   return (
     <div className="app">
-      <header className="topbar">
-        <div className="brand">
-          <svg className="mark" viewBox="0 0 32 32" aria-hidden="true">
-            <rect width="32" height="32" rx="9" fill="#1b2238" />
-            <circle cx="16" cy="16" r="7.5" fill="none" stroke="#c9cdd8" strokeWidth="1.4" />
-            <circle cx="21.3" cy="10.7" r="2.6" fill="#a8834a" stroke="#1b2238" strokeWidth="1.2" />
-          </svg>
-          <div>
-            <h1>운명원 댓글 에이전트</h1>
-            <p>연애 고민 영상에 맥락 있는 댓글을 남깁니다</p>
-          </div>
-        </div>
+      <header className="page-head">
+        <div className="page-icon" aria-hidden="true">💬</div>
+        <h1>Threadwise</h1>
+        <p className="page-desc">연애 고민 영상을 골라, 영상 맥락에 맞는 댓글을 남깁니다.</p>
         {status && (
-          <div className="quota" title="하루 게시 상한">
-            <span>
-              오늘 게시 <b>{status.todayCount}</b>
-              <em>/ {status.dailyMax}</em>
-            </span>
-            <div className="quota-bar">
-              <i style={{ width: `${(status.todayCount / status.dailyMax) * 100}%` }} />
+          <dl className="props">
+            <div>
+              <dt>오늘 게시</dt>
+              <dd>
+                <span className={`pill ${status.todayCount >= status.dailyMax ? 'red' : 'gray'}`}>
+                  {status.todayCount} / {status.dailyMax}
+                </span>
+              </dd>
             </div>
-          </div>
+            <div>
+              <dt>댓글 AI</dt>
+              <dd>
+                <span className="pill blue">
+                  {status.llmProvider === 'gemini' ? 'Gemini' : status.llmProvider === 'claude-code' ? 'Claude Code' : 'Claude Code → Gemini'}
+                </span>
+              </dd>
+            </div>
+            <div>
+              <dt>YouTube API</dt>
+              <dd>
+                <span className={`pill ${status.youtubeReady ? 'green' : 'red'}`}>
+                  {status.youtubeReady ? '연결됨' : '키 없음'}
+                </span>
+              </dd>
+            </div>
+          </dl>
         )}
       </header>
 
       {status && !status.youtubeReady && (
-        <div className="banner">
-          .env 파일에 <code>YOUTUBE_API_KEY</code>를 넣고 서버를 다시 실행해 주세요.
+        <div className="callout">
+          <span aria-hidden="true">💡</span>
+          <div>
+            .env 파일에 <code>YOUTUBE_API_KEY</code>를 넣고 서버를 다시 실행해 주세요.
+          </div>
         </div>
       )}
 
