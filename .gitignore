@@ -1,0 +1,11 @@
+node_modules
+dist
+.DS_Store
+
+# 비밀 값 · 개인 데이터는 절대 올리지 않습니다
+.env
+# 크롬 프로필 (구글 로그인 쿠키 포함)
+profiles/
+# 게시 기록 · 초안 · 실패 캡처
+data/*
+!data/.gitkeep
