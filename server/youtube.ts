@@ -17,6 +17,7 @@ export interface VideoSummary {
   commentCount: number | null; // null = 댓글 사용 중지
   durationSec: number;
   viewsPerHour: number;
+  rising?: boolean; // 실시간 조회수 상승 영상 (가점 조건 충족)
 }
 
 async function yt<T>(endpoint: string, params: Record<string, string>): Promise<T> {
@@ -182,6 +183,22 @@ export async function searchRising() {
     .filter((v) => !isEpisodeClip(v.title))
     .filter((v) => v.viewCount >= minV && v.viewCount <= maxV && v.viewsPerHour >= minVph)
     .sort((a, b) => b.viewsPerHour - a.viewsPerHour);
+}
+
+/**
+ * ① [영상 불러오기]: 최근 연애 고민 영상 + 실시간 조회수 상승 영상을 한 목록으로.
+ * 상승 검색이 실패해도 최근 영상은 보여줍니다.
+ */
+export async function loadVideos() {
+  const [latest, rising] = await Promise.allSettled([searchLatest(), searchRising()]);
+  if (latest.status === 'rejected' && rising.status === 'rejected') throw latest.reason;
+  const risingList = rising.status === 'fulfilled' ? rising.value : [];
+  const risingIds = new Set(risingList.map((v) => v.id));
+  const merged = new Map<string, VideoSummary>();
+  for (const v of [...(latest.status === 'fulfilled' ? latest.value : []), ...risingList]) {
+    merged.set(v.id, { ...v, rising: risingIds.has(v.id) });
+  }
+  return [...merged.values()].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
 }
 
 /** 인기 댓글 (댓글 생성 맥락용) */

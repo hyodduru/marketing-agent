@@ -5,7 +5,7 @@ import { store } from './store.js';
 import { getJob, startPost } from './jobs.js';
 import { checkLogin, listProfiles, openForLogin } from './profiles.js';
 import { generateDraft, getCachedDraft, validate } from './comment.js';
-import { getVideo, parseVideoId, searchLatest, searchRising } from './youtube.js';
+import { getVideo, loadVideos, parseVideoId } from './youtube.js';
 
 const app = express();
 app.use(express.json());
@@ -36,7 +36,7 @@ app.get('/api/status', (_req, res) => {
 app.get(
   '/api/videos',
   wrap(async (req, res) => {
-    const videos = req.query.mode === 'rising' ? await searchRising() : await searchLatest();
+    const videos = await loadVideos();
     const commented = new Set(
       store.all().filter((r) => r.status === 'success').map((r) => r.videoId),
     );

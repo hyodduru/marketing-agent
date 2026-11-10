@@ -9,6 +9,7 @@ export interface Video {
   commentCount: number | null;
   durationSec: number;
   viewsPerHour: number;
+  rising?: boolean;
   alreadyCommented?: boolean;
 }
 

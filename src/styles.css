@@ -188,6 +188,8 @@ textarea { padding: 10px 12px; resize: vertical; line-height: 1.65; font-size: 1
 .pill.yellow::before { background: var(--yellow); }
 .pill.red::before { background: var(--red); }
 .pill.gray::before { background: var(--text-4); }
+.pill.orange { color: #a4521a; border-color: rgba(224,123,42,.35); background: #fff6ee; }
+.pill.orange::before { background: var(--orange); }
 
 /* ── ② 초안 ── */
 .selected-video { display: flex; gap: 10px; text-decoration: none; color: inherit; padding-top: 2px; }
@@ -280,3 +282,21 @@ textarea { padding: 10px 12px; resize: vertical; line-height: 1.65; font-size: 1
   .board { grid-template-columns: 1fr; }
   .panel + .panel { border-left: 0; border-top: 1px solid var(--line); }
 }
+
+/* ① 목록 상단: 개수 + 실시간 조회수 상승 필터 */
+.list-bar { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: -6px; }
+.list-count { font-size: 12px; color: var(--text-3); }
+.filter-chip {
+  display: inline-flex; align-items: center; gap: 7px; height: 28px; padding: 0 11px;
+  border: 1px solid var(--line-2); border-radius: 999px; background: var(--surface);
+  font-size: 12px; font-weight: 500; color: var(--text-2); cursor: pointer;
+  transition: background .12s, border-color .12s, color .12s;
+}
+.filter-chip:hover:not(:disabled) { border-color: #c9ccd4; background: #f4f5f7; }
+.filter-chip:disabled { opacity: .45; cursor: default; }
+.filter-chip b { font-weight: 600; color: var(--text-3); }
+.filter-chip.on { background: #fff3e8; border-color: rgba(224,123,42,.5); color: #a4521a; }
+.filter-chip.on b { color: #a4521a; }
+.pulse { position: relative; width: 7px; height: 7px; border-radius: 50%; background: var(--orange); }
+.pulse::after { content: ''; position: absolute; inset: -3px; border-radius: 50%; border: 1px solid var(--orange); opacity: .6; animation: ping 1.6s ease-out infinite; }
+@keyframes ping { from { transform: scale(.6); opacity: .7; } to { transform: scale(1.6); opacity: 0; } }
