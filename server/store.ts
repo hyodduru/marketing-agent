@@ -5,6 +5,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { ROOT } from './config.js';
+import { cleanError } from './errors.js';
 
 export type CommentStatus = 'running' | 'success' | 'failed';
 
@@ -45,7 +46,9 @@ export function kstDate(iso: string | Date = new Date()) {
 
 export const store = {
   all(): CommentRecord[] {
-    return read().sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+    return read()
+      .map((r) => (r.error ? { ...r, error: cleanError(r.error) } : r))
+      .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
   },
 
   /** 이 영상에 이미 성공했거나 진행 중인 댓글 */

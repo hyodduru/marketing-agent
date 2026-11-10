@@ -8,6 +8,7 @@ import { chromium, type BrowserContext, type Page } from 'playwright';
 import { ROOT } from './config.js';
 import { chromePath, KEEP_REAL_KEYCHAIN } from './chrome.js';
 import { lockProfile, profileDir, writeMarker } from './profiles.js';
+import { cleanError } from './errors.js';
 
 export type PostStep = 'opening' | 'navigating' | 'typing' | 'submitting' | 'verifying' | 'done';
 
@@ -127,7 +128,7 @@ export async function postComment(opts: {
       await page.screenshot({ path: path.join(SHOT_DIR, file) }).catch(() => {});
       if (fs.existsSync(path.join(SHOT_DIR, file))) screenshot = `/screenshots/${file}`;
     }
-    throw new PostError((e as Error).message, screenshot);
+    throw new PostError(cleanError((e as Error).message), screenshot);
   } finally {
     await ctx?.close().catch(() => {});
     release();

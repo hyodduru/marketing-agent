@@ -11,6 +11,13 @@ export function HistoryTable({ records }: { records: CommentRecord[] }) {
         <p className="empty">아직 게시한 댓글이 없어요</p>
       ) : (
         <table>
+          <colgroup>
+            <col className="c-time" />
+            <col className="c-video" />
+            <col className="c-profile" />
+            <col className="c-text" />
+            <col className="c-result" />
+          </colgroup>
           <thead>
             <tr>
               <th>시간</th>
@@ -25,21 +32,23 @@ export function HistoryTable({ records }: { records: CommentRecord[] }) {
               <tr key={r.id}>
                 <td className="nowrap">{dateTime(r.createdAt)}</td>
                 <td>
-                  <a href={`https://www.youtube.com/watch?v=${r.videoId}`} target="_blank" rel="noreferrer">
+                  <a className="clamp-2" href={`https://www.youtube.com/watch?v=${r.videoId}`} target="_blank" rel="noreferrer" title={r.videoTitle}>
                     {r.videoTitle}
                   </a>
                 </td>
                 <td className="nowrap">{r.profile}</td>
                 <td className="text">{r.text}</td>
-                <td className="nowrap">
+                <td>
+                  <div className="result">
                   <span className={`pill ${r.status === 'success' ? 'green' : r.status === 'failed' ? 'red' : 'yellow'}`}>{LABEL[r.status]}</span>
                   {r.commentUrl && (
-                    <a href={r.commentUrl} target="_blank" rel="noreferrer"> 댓글 보기</a>
+                    <a className="row-link" href={r.commentUrl} target="_blank" rel="noreferrer">댓글 보기</a>
                   )}
-                  {r.error && <div className="err-msg">{r.error}</div>}
+                  {r.error && <div className="err-msg" title={r.error}>{r.error}</div>}
                   {r.screenshot && (
-                    <a href={r.screenshot} target="_blank" rel="noreferrer"> 캡처</a>
+                    <a className="row-link" href={r.screenshot} target="_blank" rel="noreferrer">실패 화면 보기</a>
                   )}
+                  </div>
                 </td>
               </tr>
             ))}
