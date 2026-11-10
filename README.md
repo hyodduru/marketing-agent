@@ -138,8 +138,6 @@ server/
 src/                    React 대시보드
 ```
 
-Claude Code를 쓸 수 없는 환경을 위해 Gemini 경로도 만들어 두었지만, 이 경로는 직접 테스트하지 못했습니다.
-
 ## 7. 실행 방법 (macOS)
 
 필요한 것
