@@ -55,9 +55,22 @@ export function LoadPanel({
         <h2>영상 불러오기</h2>
       </div>
 
-      <button className="btn primary wide" onClick={load} disabled={loading}>
-        {loading ? '불러오는 중…' : '영상 불러오기'}
-      </button>
+      <div className="actions">
+        <button className="btn primary" onClick={load} disabled={loading}>
+          {loading ? '불러오는 중…' : '영상 불러오기'}
+        </button>
+        <button
+          className={`filter-chip ${risingOnly ? 'on' : ''}`}
+          onClick={() => setRisingOnly((v) => !v)}
+          aria-pressed={risingOnly}
+          disabled={!videos || risingCount === 0}
+          title="올라온 지 34시간 이내 · 조회수 1천~5천 · 시간당 150회 이상"
+        >
+          <i className="pulse" aria-hidden="true" />
+          실시간 조회수 상승 영상만
+          {videos && <b>{risingCount}</b>}
+        </button>
+      </div>
 
       <form className="url-form" onSubmit={addByUrl}>
         <input value={url} onChange={(e) => setUrl(e.target.value)} placeholder="또는 유튜브 링크 붙여넣기" />
@@ -68,22 +81,7 @@ export function LoadPanel({
 
       {error && <p className="error">{error}</p>}
 
-      {videos && (
-        <div className="list-bar">
-          <span className="list-count">영상 {shown?.length}개</span>
-          <button
-            className={`filter-chip ${risingOnly ? 'on' : ''}`}
-            onClick={() => setRisingOnly((v) => !v)}
-            aria-pressed={risingOnly}
-            disabled={risingCount === 0}
-            title="올라온 지 34시간 이내 · 조회수 1천~5천 · 시간당 150회 이상"
-          >
-            <i className="pulse" aria-hidden="true" />
-            실시간 조회수 상승 영상만
-            <b>{risingCount}</b>
-          </button>
-        </div>
-      )}
+      {videos && <p className="list-count">영상 {shown?.length}개{risingOnly ? ' · 실시간 조회수 상승만' : ''}</p>}
 
       <div className="video-list">
         {videos === null && !loading && (
