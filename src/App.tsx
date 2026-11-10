@@ -35,7 +35,7 @@ export default function App() {
     <div className="app">
       <header className="page-head">
         <div className="page-icon" aria-hidden="true">💬</div>
-        <h1>Threadwise</h1>
+        <h1>JG Comment Agent</h1>
         <p className="page-desc">연애 고민 영상을 골라, 영상 맥락에 맞는 댓글을 남깁니다.</p>
         {status && (
           <dl className="props">

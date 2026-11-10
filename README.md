@@ -1,4 +1,4 @@
-# 운명원 댓글 에이전트
+# JG Comment Agent
 
 > (주)제이지그룹 AI PM 과제 · **TRACK 2 마케팅 AI 에이전트**
 
