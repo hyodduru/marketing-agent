@@ -33,43 +33,36 @@ export default function App() {
 
   return (
     <div className="app">
-      <header className="page-head">
-        <div className="page-icon" aria-hidden="true">💬</div>
-        <h1>JG Comment Agent</h1>
-        <p className="page-desc">연애 고민 영상을 골라, 영상 맥락에 맞는 댓글을 남깁니다.</p>
+      <header className="topbar">
+        <div className="brand">
+          <span className="logo" aria-hidden="true">JG</span>
+          <h1>JG Comment Agent</h1>
+          <span className="crumb">/ 연애 고민 영상 댓글</span>
+        </div>
         {status && (
-          <dl className="props">
-            <div>
-              <dt>오늘 게시</dt>
-              <dd>
-                <span className={`pill ${status.todayCount >= status.dailyMax ? 'red' : 'gray'}`}>
-                  {status.todayCount} / {status.dailyMax}
-                </span>
-              </dd>
-            </div>
-            <div>
-              <dt>댓글 AI</dt>
-              <dd>
-                <span className="pill blue">
-                  {status.llmProvider === 'gemini' ? 'Gemini' : status.llmProvider === 'claude-code' ? 'Claude Code' : 'Claude Code → Gemini'}
-                </span>
-              </dd>
-            </div>
-            <div>
-              <dt>YouTube API</dt>
-              <dd>
-                <span className={`pill ${status.youtubeReady ? 'green' : 'red'}`}>
-                  {status.youtubeReady ? '연결됨' : '키 없음'}
-                </span>
-              </dd>
-            </div>
-          </dl>
+          <div className="meta-chips">
+            <span className="chip-meta" title="YouTube Data API">
+              <i className={`led ${status.youtubeReady ? 'ok' : 'bad'}`} />
+              YouTube API
+            </span>
+            <span className="chip-meta" title="댓글 생성 AI">
+              <i className="led ok" />
+              {status.llmProvider === 'gemini' ? 'Gemini' : status.llmProvider === 'claude-code' ? 'Claude Code' : 'Claude Code'}
+            </span>
+            <span className="chip-meta quota" title="하루 게시 상한">
+              오늘 게시
+              <b>{status.todayCount}</b>
+              <span className="of">/ {status.dailyMax}</span>
+              <span className="mini-bar">
+                <i style={{ width: `${(status.todayCount / status.dailyMax) * 100}%` }} />
+              </span>
+            </span>
+          </div>
         )}
       </header>
 
       {status && !status.youtubeReady && (
         <div className="callout">
-          <span aria-hidden="true">💡</span>
           <div>
             .env 파일에 <code>YOUTUBE_API_KEY</code>를 넣고 서버를 다시 실행해 주세요.
           </div>
