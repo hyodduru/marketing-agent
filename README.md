@@ -47,7 +47,7 @@ profiles: [유튜브1, 유튜브2, 유튜브3]
 search:   { query: "연애 고민|남자 심리|…", published_within_days: 14, max_per_channel: 2 }
 rising:   { query: 연애, min_views: 1000, max_views: 5000, min_views_per_hour: 150 }
 comment:  { min_chars: 40, max_chars: 120, brand: 운명원 }
-limits:   { daily_max_comments: 10 }
+limits:   { daily_max_comments: 10, allow_shorts_post: true }
 ```
 
 ## 구조
@@ -62,7 +62,10 @@ server/
   profiles.ts     ③ 전용 프로필 폴더 · 로그인 확인
   poster.ts       ③ Playwright: 열기 → 타이핑 → 게시 → 확인 · 실패 캡처
   jobs.ts         운영 규칙 강제 · 프로필 자동 배정 · 진행 이벤트
+  errors.ts       게시 실패 원인을 읽기 쉬운 문장으로 변환
   store.ts        게시 기록 (data/comments.json)
+  config.ts       config.yaml · .env 읽기
+  index.ts        API 서버
 src/              React 대시보드 (3칸 + 기록 표)
 ```
 
@@ -78,7 +81,7 @@ src/              React 대시보드 (3칸 + 기록 표)
 
 ### 만들면서 바꾼 것들
 
-처음엔 '연애'로 검색했더니 예능 클립이 목록을 거의 다 채웠습니다. 그런 영상의 댓글창은 출연자 얘기뿐이라, 거기서 사주 얘기를 꺼내면 바로 광고처럼 보일 것 같았습니다. 그래서 검색어를 남자 심리, 재회, 썸, 짝사랑처럼 고민을 다루는 쪽으로 바꾸고 방송사 채널과 회차 클립은 뺐습니다. 한 채널이 목록을 다 차지하는 문제도 있어서 채널당 2개까지만 보이게 했습니다.
+처음엔 '연애', '썸', '재회'처럼 넓은 키워드로 검색했더니 예능 클립이 목록을 거의 다 채웠습니다. 그런 영상의 댓글창은 출연자 얘기뿐이라, 거기서 사주 얘기를 꺼내면 바로 광고처럼 보일 것 같았습니다. 그래서 검색어를 남자 심리, 재회 방법, 썸 신호, 연애 상담처럼 고민을 다루는 쪽으로 바꾸고 방송사 채널과 회차 클립은 뺐습니다. 한 채널이 목록을 다 차지하는 문제도 있어서 채널당 2개까지만 보이게 했습니다.
 
 뜨기 직전 영상(가점)은 처음에 결과가 계속 0개였습니다. 최근 48시간 영상을 최신순으로 가져오다 보니 막 올라온, 조회수 수십 회짜리만 잡혔던 것입니다. 조회수가 5,000 이하이면서 시간당 150회 이상이려면 올라온 지 33시간 안쪽일 수밖에 없다는 점을 이용해, 최근 34시간 영상을 조회수순으로 훑다가 1,000회 아래로 내려가면 멈추도록 바꿨습니다. 화면에는 버튼을 따로 두지 않았습니다. 사용자에게 영상을 불러오는 건 하나의 동작이라고 봐서, 한 번에 같이 불러온 뒤 "실시간 조회수 상승 영상만" 필터로 걸러 볼 수 있게 했습니다.
 
@@ -98,7 +101,7 @@ LLM은 지시를 가끔 어깁니다. 그래서 과제의 금지 사항은 프�
 
 지금은 댓글이 게시됐다는 것까지만 알 수 있습니다. 실제로 운영한다면 댓글의 좋아요와 답글, 운명원 유입을 추적해서 어떤 영상과 어떤 말투가 효과가 있는지 보고 싶습니다. 게시 후 로그인하지 않은 브라우저에서 댓글이 보이는지 확인하면 스팸 필터에 숨겨진 경우도 잡아낼 수 있을 것입니다. 그리고 실제 상업 운영이라면 표시광고법상 경제적 이해관계를 밝혀야 할 수도 있어서, 운영 전에 법무 검토가 필요하다고 봅니다.
 
-비용은 거의 들지 않습니다. 댓글 생성은 Claude Code(Pro 구독)로 돌려 추가 API 비용이 없고, Gemini 무료 키로도 동작하게 해 두었습니다. YouTube Data API도 무료 할당량 안에서 씁니다.
+비용은 거의 들지 않습니다. 댓글 생성은 Claude Code(Pro 구독)로 돌려 추가 API 비용이 없습니다. Claude Code를 쓸 수 없는 환경을 위해 Gemini 무료 키로도 생성하는 경로를 만들어 두었지만, 이 경로는 직접 테스트하지는 못했습니다. YouTube Data API도 무료 할당량 안에서 씁니다.
 
 ## 사용한 오픈소스
 [Playwright](https://github.com/microsoft/playwright) · [React](https://github.com/facebook/react) · [Vite](https://github.com/vitejs/vite) · [Express](https://github.com/expressjs/express) · [yaml](https://github.com/eemeli/yaml) · [dotenv](https://github.com/motdotla/dotenv) · [tsx](https://github.com/privatenumber/tsx) · [concurrently](https://github.com/open-cli-tools/concurrently)
