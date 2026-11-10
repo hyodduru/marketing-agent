@@ -9,3 +9,6 @@ profiles/
 # 게시 기록 · 초안 · 실패 캡처
 data/*
 !data/.gitkeep
+
+# 에디터 임시 파일
+*.swp
