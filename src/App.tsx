@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { api } from './api';
 import type { CommentRecord, Status, Video } from './types';
 import { LoadPanel } from './panels/LoadPanel';
@@ -25,6 +25,12 @@ export default function App() {
   useEffect(() => {
     refresh().catch(() => {});
   }, [refresh]);
+
+  // 댓글을 단 영상: 기록이 갱신되면 바로 목록에 반영 (회색 + '댓글 완료')
+  const commentedIds = useMemo(
+    () => new Set(history.filter((r) => r.status !== 'failed').map((r) => r.videoId)),
+    [history],
+  );
 
   const select = (v: Video) => {
     setSelected(v);
@@ -70,7 +76,7 @@ export default function App() {
       )}
 
       <main className="board">
-        <LoadPanel selectedId={selected?.id} onSelect={select} />
+        <LoadPanel selectedId={selected?.id} onSelect={select} commentedIds={commentedIds} />
         <SelectPanel
           video={selected}
           text={draft}
@@ -78,7 +84,7 @@ export default function App() {
           onChecksChange={setDraftOk}
         />
         <PostPanel
-          video={selected}
+          video={selected && { ...selected, alreadyCommented: commentedIds.has(selected.id) }}
           draft={draft}
           draftOk={draftOk}
           status={status}

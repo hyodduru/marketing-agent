@@ -7,9 +7,11 @@ import { compact, duration, timeAgo } from '../format';
 export function LoadPanel({
   selectedId,
   onSelect,
+  commentedIds,
 }: {
   selectedId?: string;
   onSelect: (v: Video) => void;
+  commentedIds: Set<string>;
 }) {
   const [videos, setVideos] = useState<Video[] | null>(null);
   const [risingOnly, setRisingOnly] = useState(false);
@@ -94,7 +96,7 @@ export function LoadPanel({
           </p>
         )}
         {shown?.length === 0 && <p className="empty">조건에 맞는 영상이 없어요</p>}
-        {shown?.map((v) => (
+        {shown?.map((v) => ({ ...v, alreadyCommented: v.alreadyCommented || commentedIds.has(v.id) })).map((v) => (
           <button
             key={v.id}
             className={`video-card ${selectedId === v.id ? 'active' : ''} ${v.alreadyCommented ? 'done' : ''}`}
