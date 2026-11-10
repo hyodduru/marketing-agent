@@ -134,13 +134,16 @@ export function PostPanel({
       <div className="field">
         <label>크롬 프로필</label>
         <select value={profile} onChange={(e) => setProfile(e.target.value)} disabled={inProgress}>
-          <option value="auto">자동 배정 (오늘 가장 적게 쓴 계정)</option>
+          <option value="auto">자동 배정</option>
           {profiles.map((p) => (
             <option key={p.name} value={p.name} disabled={!p.loggedIn}>
               {p.name} {p.loggedIn ? '' : '(로그인 필요)'}
             </option>
           ))}
         </select>
+        {profile === 'auto' && (
+          <p className="field-hint">로그인된 계정 중 오늘 가장 적게 쓴 계정으로 돌아가며 달아요.</p>
+        )}
       </div>
 
       <button className="btn primary wide" onClick={post} disabled={!canPost}>
