@@ -22,6 +22,7 @@ export function LoadPanel({
   const load = async () => {
     setLoading(true);
     setError('');
+    setRisingOnly(false); // 새로 불러오면 항상 전체 목록부터
     try {
       const { videos } = await api.get<{ videos: Video[] }>('/api/videos');
       setVideos(videos);
