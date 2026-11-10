@@ -1,7 +1,10 @@
 /**
  * 유튜브 자막 가져오기 (공식 API는 남의 영상 자막 다운로드를 막아서, 플레이어 정보를 읽습니다).
- * 공개 영상 페이지에 있는 자막 정보만 사용하고, 받지 못하면 null → 제목·설명으로 대체합니다 (과제 요구사항).
+ * 1순위: 영상 페이지의 '스크립트 표시'를 열어 화면의 자막을 읽음
+ * 2순위: 페이지에 실린 자막 정보. 둘 다 없으면 null → 제목·설명으로 대체 (과제 요구사항).
  */
+import { readTranscriptFromPage } from './transcript-reader.js';
+
 const UA =
   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36';
 
@@ -57,6 +60,14 @@ function sample(text: string, max = 7000) {
 }
 
 export async function getTranscript(videoId: string): Promise<string | null> {
+  // 1) 영상 페이지의 '스크립트 표시'를 열어 읽기 (사람이 보는 그대로)
+  try {
+    const text = await readTranscriptFromPage(videoId);
+    if (text) return sample(text);
+  } catch (e) {
+    console.warn('[자막] 스크립트 표시 읽기 실패:', (e as Error).message);
+  }
+  // 2) 페이지에 실린 자막 정보 (대부분 비어 있음)
   for (const source of [tracksFromWatchPage]) {
     try {
       const track = pickTrack(await source(videoId));

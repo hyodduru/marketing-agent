@@ -2,6 +2,7 @@ import express from 'express';
 import path from 'node:path';
 import { env, loadConfig, ROOT } from './config.js';
 import { store } from './store.js';
+import { getTranscript } from './transcript.js';
 import { getJob, startPost } from './jobs.js';
 import { checkLogin, listProfiles, openForLogin } from './profiles.js';
 import { generateDraft, getCachedDraft, validate } from './comment.js';
@@ -128,6 +129,16 @@ app.get('/api/post/:jobId/stream', (req, res) => {
   job.emitter.on('event', onEvent);
   req.on('close', () => job.emitter.off('event', onEvent));
 });
+
+/** 자막 확인 (점검용) */
+app.get(
+  '/api/transcript',
+  wrap(async (req, res) => {
+    const t0 = Date.now();
+    const text = await getTranscript(String(req.query.videoId ?? ''));
+    res.json({ ok: Boolean(text), chars: text?.length ?? 0, ms: Date.now() - t0, head: text?.slice(0, 200) ?? null });
+  }),
+);
 
 /** 기록 */
 app.get('/api/history', (_req, res) => {
